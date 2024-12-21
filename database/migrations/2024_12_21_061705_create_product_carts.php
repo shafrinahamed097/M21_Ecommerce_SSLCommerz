@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_details', function (Blueprint $table) {
+        Schema::create('product_carts', function (Blueprint $table) {
             $table->id();
-            $table->string('img1',200);
-            $table->string('img2',200);
-            $table->string('img3',200);
-            $table->string('img4',200);
+            
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
 
-            $table->longText('des');
-            $table->string('color',50);
-            $table->string('size',50);
+            $table->string('color',200);
+            $table->string('size',200);
+            $table->string('qty',200);
+            $table->string('price', 200);
 
-
-            $table->unsignedBigInteger('product_id')->unique();
             $table->foreign('product_id')->references('id')->on('products')->restrictOnDelete()->restrictOnUpdate();
+            $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete()->cascadeOnUpdate();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_details');
+        Schema::dropIfExists('product_carts');
     }
 };
