@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\JsonResource;
 use App\Helper\ResponseHelper;
-use GuzzleHttp\Psr7\Response;
+
 
 class BrandController extends Controller
 {
