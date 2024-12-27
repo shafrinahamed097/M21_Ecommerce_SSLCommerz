@@ -11,8 +11,9 @@
         <p style="font-size:0.9em;">Regards,<br />Apple Shop</p>
         <hr style="border:none;border-top:1px solid #eee" />
         <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-            <p>mrdeveloper.dev</p>
-            
+            <p>Apple Shop Inc</p>
+            <p>1600 Amphitheatre Parkway</p>
+            <p>California</p>
         </div>
     </div>
 </div>

@@ -13,7 +13,6 @@ class OTPMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
-
     /**
      * Create a new message instance.
      */
@@ -28,7 +27,7 @@ class OTPMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'mrdeveloper.dev OTP Mail, Please do not share this code',
+            subject: 'Apple Shop OTP Mail',
         );
     }
 
