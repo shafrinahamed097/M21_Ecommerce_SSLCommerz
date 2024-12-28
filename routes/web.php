@@ -45,6 +45,7 @@ Route::get("/ListProductReviewByProduct/{product_id}", [ProductController::class
 Route::get("/PolicyByType/{type}", [PolicyController::class, 'PolicyByType'] );
 
 // User Auth
+
 Route::get("/UserLogin/{UserEmail}", [UserController::class, 'UserLogin']);
-Route::get("/verifyLogin/{UserEmail}/{OTP}", [UserController::class, 'VerifyLogin']);
+Route::get("/VerifyLogin/{UserEmail}/{OTP}", [UserController::class, 'VerifyLogin']);
 Route::get('/logout', [UserController::class, 'userLogout']);
