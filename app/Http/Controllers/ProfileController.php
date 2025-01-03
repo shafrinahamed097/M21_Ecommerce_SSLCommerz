@@ -9,21 +9,17 @@ use App\Models\CustomerProfile;
 
 class ProfileController extends Controller
 {
-
+ 
     public function CreateProfile(Request $request){
-      try{
         $user_id = $request->header('id');
         $request->merge(['user_id'=>$user_id]);
         $data = CustomerProfile::updateOrCreate([
             'user_id'=>$user_id
         ],
-        $request->input()
-    
+    $request->input()
     );
 
-    return ResponseHelper::Out("success", $data, 200);
-      }catch(Exception $e){
-        return ResponseHelper::Out('Fail', $e, 401);
-      }
+    return ResponseHelper::Out('success', $data,200);
     }
+    
 }
