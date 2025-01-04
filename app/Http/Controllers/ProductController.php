@@ -96,28 +96,32 @@ class ProductController extends Controller
 
         if($profile){
             $request->merge(['customer_id'=>$profile->id]);
-            $data = ProductReview::updateOrCreate(['customer_id'=>$profile->id, 'product_id'=>$request->input('product_id')], $request->input());
-            return ResponseHelper::Out('success', $data,200);
-
+            $data = ProductReview::updateOrCreate(['customer_id'=>$profile->id, 'product_id'=>$request->input('product_id')],
+        $request->input()
+        );
+        return ResponseHelper::Out('success', $data,200);
         }else{
             return ResponseHelper::Out('fail', 'Customer Profile not exists',200);
         }
     }
     
 
-    public function ProductWishList(Request $request):JsonResponse{
-        $user_id=$request->header('id');
-        $data=ProductWish::where('user_id',$user_id)->with('product')->get();
-        return ResponseHelper::Out('success',$data,200);
-    }
+    // public function ProductWishList(Request $request):JsonResponse{
+    //     $user_id=$request->header('id');
+    //     $data=ProductWish::where('user_id',$user_id)->with('product')->get();
+    //     return ResponseHelper::Out('success',$data,200);
+    // }
 
-    public function CreateWishList(Request $request):JsonResponse{
-        $user_id=$request->header('id');
-        $data=ProductWish::updateOrCreate(
-            ['user_id' => $user_id,'product_id'=>$request->product_id],
-            ['user_id' => $user_id,'product_id'=>$request->product_id],
-        );
-        return ResponseHelper::Out('success',$data,200);
+
+
+    public function ProductWishList(Request $request){
+        $user_id = $request->header('id');
+        $data = ProductWish::where('user_id', $user_id)->with('product')->get();
+        if($data){
+            return ResponseHelper::Out('Success', $data, 200);
+        }else{
+            return ResponseHelper::Out('fail', 'something went wrong',200);
+        }
     }
 
 
