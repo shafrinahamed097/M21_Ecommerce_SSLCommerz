@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Helper\ResponseHelper;
 use App\Models\CustomerProfile;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -19,12 +20,11 @@ class ProfileController extends Controller
     return ResponseHelper::Out('success', $data,200);
    }
 
-  public function ReadProfile(Request $request){
+   public function ReadProfile(Request $request){
     $user_id = $request->header('id');
-    $data = CustomerProfile::where('user_id', $user_id)->with('user')->first();
+    $data = CustomerProfile::where('user_id',$user_id)->with('user');
     return ResponseHelper::Out('success', $data,200);
-
-  }
+   }
 
    
 
