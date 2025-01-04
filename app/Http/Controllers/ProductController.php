@@ -124,6 +124,19 @@ class ProductController extends Controller
         }
     }
 
+   public function CreateWishList(Request $request){
+    $user_id = $request->header('id');
+    $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id],
+    ['user_id' =>$user_id, 'product_id'=>$request->product_id]
+  
+   );
+   if($data){
+    return ResponseHelper::Out('success', 'Product Added', 200);
+   }else{
+    return ResponseHelper::Out('fail', 'Product Does not Added',200);
+   }
+   }
+
     // public function RemoveWishList(Request $request):JsonResponse{
     //     $user_id=$request->header('id');
     //     $data=ProductWish::where(['user_id' => $user_id,'product_id'=>$request->product_id])->delete();
@@ -134,9 +147,9 @@ class ProductController extends Controller
         $user_id = $request->header('id');
         $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id])->delete();
         if($data){
-            return ResponseHelper::Out('Success', 'Product Remove Success',200);
+            return ResponseHelper::Out('success', 'Product Remove Success', 200);
         }else{
-            return ResponseHelper::Out('fail', 'Product does not remove, try again!',200);
+            return ResponseHelper::Out('fail', 'Product does not remove, try again!', 200);
         }
     }
    
