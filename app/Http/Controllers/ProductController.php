@@ -106,6 +106,35 @@ class ProductController extends Controller
     }
     
 
+    
+
+    public function CreateWishList(Request $request){
+        $user_id = $request->header('id');
+        $data = ProductWish::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$request->product_id],['user_id'=>$user_id, 'product_id'=>$request->product_id]);
+        if($data){
+            return ResponseHelper::Out('success', 'Product Added',200);
+
+        }else{
+            return ResponseHelper::Out('fail', 'product does not added',200);
+        }
+    }
+
+    // public function RemoveWishList(Request $request):JsonResponse{
+    //     $user_id=$request->header('id');
+    //     $data=ProductWish::where(['user_id' => $user_id,'product_id'=>$request->product_id])->delete();
+    //     return ResponseHelper::Out('success',$data,200);
+    // }
+
+    public function RemoveWishList(Request $request){
+        $user_id = $request->header('id');
+        $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id])->delete();
+        if($data){
+            return ResponseHelper::Out('success', 'Product Remove Success', 200);
+        }else{
+            return ResponseHelper::Out('fail', 'Product does not remove, try again!', 200);
+        }
+    }
+
     // public function ProductWishList(Request $request):JsonResponse{
     //     $user_id=$request->header('id');
     //     $data=ProductWish::where('user_id',$user_id)->with('product')->get();
@@ -121,35 +150,6 @@ class ProductController extends Controller
             return ResponseHelper::Out('Success', $data,200);
         }else{
             return ResponseHelper::Out('fail', 'something went wrong, try Again!',200);
-        }
-    }
-
-   public function CreateWishList(Request $request){
-    $user_id = $request->header('id');
-    $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id],
-    ['user_id' =>$user_id, 'product_id'=>$request->product_id]
-  
-   );
-   if($data){
-    return ResponseHelper::Out('success', 'Product Added', 200);
-   }else{
-    return ResponseHelper::Out('fail', 'Product Does not Added',200);
-   }
-   }
-
-    // public function RemoveWishList(Request $request):JsonResponse{
-    //     $user_id=$request->header('id');
-    //     $data=ProductWish::where(['user_id' => $user_id,'product_id'=>$request->product_id])->delete();
-    //     return ResponseHelper::Out('success',$data,200);
-    // }
-
-    public function RemoveWishList(Request $request){
-        $user_id = $request->header('id');
-        $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id])->delete();
-        if($data){
-            return ResponseHelper::Out('success', 'Product Remove Success', 200);
-        }else{
-            return ResponseHelper::Out('fail', 'Product does not remove, try again!', 200);
         }
     }
    

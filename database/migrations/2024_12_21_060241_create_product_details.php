@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('color',200);
             $table->string('size',200);
 
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('product_id')->unique();
             $table->foreign('product_id')->references('id')->on('products')->restrictOnDelete()->restrictOnUpdate();
 
             $table->timestamp('created_at')->useCurrent();
