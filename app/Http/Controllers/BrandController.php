@@ -13,9 +13,13 @@ class BrandController extends Controller
 {
 
 
-  public function BrandList():JsonResponse{
-   $data = Brand::all();
-   return ResponseHelper::Out("Success", $data,200);
+  public function BrandList(Request $request){
+    $data = Brand::all();
+    if($data){
+      return ResponseHelper::Out('success', $data,200);
+    }else{
+      return ResponseHelper::Out('fail', 'something went wrong', 200);
+    }
   }
   
 }

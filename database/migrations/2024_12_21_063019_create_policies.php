@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['about', 'terms', 'how to buy', 'contact', 'complain']);
+            $table->enum('type', ['about', 'terms', 'how to buy', 'contact', 'complain', 'refund']);
             $table->longText('des');
         });
     }
