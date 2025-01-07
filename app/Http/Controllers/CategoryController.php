@@ -9,9 +9,12 @@ use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
-   public function CategoryList():JsonResponse
-   {
-    $data = Category::all();
-    return ResponseHelper::Out('success', $data,200);
+   public function CategoryList(){
+      $data = Category::all();
+      if($data){
+         return ResponseHelper::OUt('success', $data,200);
+      }else{
+         return ResponseHelper::Out("fail", 'Something went wrong',200);
+      }
    }
 }

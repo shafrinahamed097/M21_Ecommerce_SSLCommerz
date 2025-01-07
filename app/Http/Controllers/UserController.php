@@ -30,11 +30,11 @@ class UserController extends Controller
    public function UserLogin(Request $request){
     try{
         $UserEmail = $request->UserEmail;
-    $OTP = rand(100000,999999);
-    $details = ['code'=>$OTP];
-    Mail::to($UserEmail)->send(new OTPMail($details));
-    User::updateOrCreate(['email'=>$UserEmail],['email'=>$UserEmail, 'otp'=>$OTP]);
-    return ResponseHelper::Out('success', 'A 6 Digit OTP has been send to your email address', 200);
+        $OTP = rand(100000,999999);
+        $details = ['code'=>$OTP];
+        Mail::to($UserEmail)->send(new OTPMail($details));
+        User::updateOrCreate(['email'=>$UserEmail],['email'=>$UserEmail, 'otp'=>$OTP]);
+        return ResponseHelper::Out('success', 'A 6 Digit OTP has been send to your email address', 200);
     }
 
     catch(Exception){
