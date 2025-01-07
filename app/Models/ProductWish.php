@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductWish extends Model
 {
-    protected $fillable=['product_id', 'user_id'];
+    protected $fillable=['user_id', 'product_id'];
 
     public function product():BelongsTo
     {

@@ -90,34 +90,25 @@ class ProductController extends Controller
     // }
 
 
-    public function CreateProductReview(Request $request){
-        $user_id = $request->header('id');
-        $profile = CustomerProfile::where('user_id', $user_id)->first();
+  public function CreateProductReview(Request $request){
+    $user_id = $request->header('id');
+    $profile = CustomerProfile::where('user_id', $user_id)->first();
 
-        if($profile){
-            $request->merge(['customer_id'=>$profile->id]);
-            $data = ProductReview::updateOrCreate(['customer_id'=>$profile->id, 'product_id'=>$request->input('product_id')],
-        $request->input()
-        );
+    if($profile){
+        $request->merge(['customer_id'=>$profile->id]);
+        $data = ProductReview::updateOrCreate(['customer_id'=>$profile->id, 'product_id'=>$request->input('product_id')], $request->input());
         return ResponseHelper::Out('success', $data,200);
-        }else{
-            return ResponseHelper::Out('fail', 'Customer Profile not exists',200);
-        }
+    }else{
+        return ResponseHelper::Out('fail','Customer Profile not exits',200);
     }
-    
+  }
 
     
-
-    public function CreateWishList(Request $request){
-        $user_id = $request->header('id');
-        $data = ProductWish::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$request->product_id],['user_id'=>$user_id, 'product_id'=>$request->product_id]);
-        if($data){
-            return ResponseHelper::Out('success', 'Product Added',200);
-
-        }else{
-            return ResponseHelper::Out('fail', 'product does not added',200);
-        }
-    }
+   public function CreateWishList(Request $request){
+    $user_id = $request->header('id');
+    $data = ProductWish::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$request->product_id],['user_id'=>$user_id, 'product_id'=>$request->product_id]);
+    return ResponseHelper::Out('success', $data,200);
+   }
 
     // public function RemoveWishList(Request $request):JsonResponse{
     //     $user_id=$request->header('id');
