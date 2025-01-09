@@ -10,7 +10,7 @@ class CustomerProfile extends Model
 {
     protected $fillable = [
         'cus_name',
-        'cus-add',
+        'cus_add',
         'cus_city',
         'cus_state',
         'cus_postcode',

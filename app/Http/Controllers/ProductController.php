@@ -11,6 +11,7 @@ use App\Models\ProductWish;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -106,8 +107,16 @@ class ProductController extends Controller
     
    public function CreateWishList(Request $request){
     $user_id = $request->header('id');
-    $data = ProductWish::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$request->product_id],['user_id'=>$user_id, 'product_id'=>$request->product_id]);
-    return ResponseHelper::Out('success', $data,200);
+    $data = ProductWish::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$request->product_id],
+['user_id'=>$user_id, 'product_id'=>$request->product_id]);
+     if($data){
+        return ResponseHelper::Out('success', $data,200);
+
+ }else{
+    return ResponseHelper::Out('fail', 'Something went wrong',200);
+ }
+
+
    }
 
     // public function RemoveWishList(Request $request):JsonResponse{
@@ -119,10 +128,11 @@ class ProductController extends Controller
     public function RemoveWishList(Request $request){
         $user_id = $request->header('id');
         $data = ProductWish::where(['user_id'=>$user_id, 'product_id'=>$request->product_id])->delete();
+
         if($data){
-            return ResponseHelper::Out('success', 'Product Remove Success', 200);
+            return ResponseHelper::Out('success', 'Product remove', 200);
         }else{
-            return ResponseHelper::Out('fail', 'Product does not remove, try again!', 200);
+            return ResponseHelper::Out('fail', 'Product Does not remove, something went wrong, Try again!',200);
         }
     }
 
@@ -133,53 +143,80 @@ class ProductController extends Controller
     // }
 
 
-
-    public function ProductWishList(Request $request){
+     public function ProductWishList(Request $request){
         $user_id = $request->header('id');
         $data = ProductWish::where('user_id', $user_id)->with('product')->get();
-        if($data){
-            return ResponseHelper::Out('Success', $data,200);
-        }else{
-            return ResponseHelper::Out('fail', 'something went wrong, try Again!',200);
-        }
-    }
+        return ResponseHelper::Out('success', $data,200);
+     }
    
+    // public function CreateCartList(Request $request){
+    //     $user_id = $request->header('id');
+    //     $product_id = $request->input('product_id');
+    //     $color = $request->input('color');
+    //     $size = $request->input('size');
+    //     $qty = $request->input('size');
+
+    //     $UnitPrice = 0;
+
+    //     $productDetails = Product::where('id', '=', $product_id)->first();
+
+    //     if($productDetails->discount==1){
+    //         $UnitPrice = $productDetails->discount_price;
+    //     }else{
+    //         $UnitPrice = $productDetails->price;
+    //     }
+
+    //     $totalPrice = $qty*$UnitPrice;
+
+    //     $data = ProductCart::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$product_id],
+    //     [
+
+    //         'user_id' =>$user_id,
+    //         'product_id' =>$product_id,
+    //         'color' =>$color,
+    //         'size' =>$size,
+    //         'qty' =>$qty,
+    //         'price' =>$totalPrice
+    //     ]
+    
+    // );
+
+    // return ResponseHelper::Out("success", $data,200);
+    // }
+
+      
     public function CreateCartList(Request $request){
         $user_id = $request->header('id');
         $product_id = $request->input('product_id');
         $color = $request->input('color');
         $size = $request->input('size');
-        $qty = $request->input('size');
+        $qty = $request->input('qty');
 
         $UnitPrice = 0;
 
         $productDetails = Product::where('id', '=', $product_id)->first();
 
-        if($productDetails->discount===1){
+        if($productDetails->discount == 1){
             $UnitPrice = $productDetails->discount_price;
         }else{
             $UnitPrice = $productDetails->price;
         }
+        $totalPrice = $qty * $UnitPrice;
 
-        $totalPrice = $qty*$UnitPrice;
+        $data = ProductCart::updateOrCreate(['user_id'=> $user_id, 'product_id'=>$product_id],
+    [
+        'user_id'=>$user_id,
+        'product_id'=>$product_id,
+        'color'=>$color,
+        'size'=>$size,
+        'qty'=>$qty,
+        'price'=>$totalPrice
 
-        $data = ProductCart::updateOrCreate(['user_id'=>$user_id, 'product_id'=>$product_id],
-        [
-
-            'user_id' =>$user_id,
-            'product_id' =>$product_id,
-            'color' =>$color,
-            'size' =>$size,
-            'qty' =>$qty,
-            'price' =>$totalPrice
-        ]
-    
-    );
+    ]);
 
     return ResponseHelper::Out("success", $data,200);
+
     }
-
-
     public function CartList(Request $request){
         $user_id = $request->header('id');
         $data = ProductCart::where('user_id', $user_id)->with('product')->get();
