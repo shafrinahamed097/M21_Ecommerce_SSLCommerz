@@ -217,20 +217,34 @@ class ProductController extends Controller
     return ResponseHelper::Out("success", $data,200);
 
     }
-    public function CartList(Request $request){
-        $user_id = $request->header('id');
-        $data = ProductCart::where('user_id', $user_id)->with('product')->get();
-        return ResponseHelper::Out("success", $data,200);
-    
-    }
+    // public function CartList(Request $request){
 
-    public function DeleteCartList(Request $request){
-        $user_id = $request->header('id');
-        $data = ProductCart::where('user_id', '=', $user_id)->where('product_id', '=', $request->product_id)->delete();
-        return ResponseHelper::Out("success", $data,200);
-    }
+    //     $user_id = $request->header('id');
+    //     $data = ProductCart::where('user_id', $user_id)->with('product')->get();
+    //     return ResponseHelper::Out("success", $data,200);
+    
+    // }
+
+
+   public function CartList(Request $request){
+    $user_id = $request->header('id');
+    $data =ProductCart::where('user_id', $user_id)->with('product')->get();
+    return ResponseHelper::Out('success', $data,200);
+   }
+
+    // public function DeleteCartList(Request $request){
+    //     $user_id = $request->header('id');
+    //     $data = ProductCart::where('user_id', '=', $user_id)->where('product_id', '=', $request->product_id)->delete();
+    //     return ResponseHelper::Out("success", $data,200);
+    // }
 
     
+
+   public function DeleteCartList(Request $request){
+    $user_id = $request->header('id');
+    $data = ProductCart::where('user_id', '=', $user_id)->where('product_id', '=', $request->product_id)->delete();
+    return ResponseHelper::Out('success', $data,200);
+   }
 
 
 
