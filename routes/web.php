@@ -72,3 +72,4 @@ Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCar
 
 // Invoice and Payment
 Route::get("/InvoiceCreate", [InvoiceController::class, "InvoiceCreate"])->middleware([TokenAuthenticate::class]);
+Route::get("/InvoiceList", [InvoiceController::class, "InvoiceList"])->middleware([TokenAuthenticate::class]);
