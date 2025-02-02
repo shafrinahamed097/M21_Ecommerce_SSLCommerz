@@ -137,3 +137,30 @@ SSL-COMMERZ
 -   Cancel Payment
 -   Fail Payment
 -   IPN
+
+\***\*\*\*\*\*\*\***\_\***\*\*\*\*\*\*\*** Start Front-End \***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
+
+1. HTML CSS Template
+2. Views File Folder Structure
+
+-   pages
+
+    -   brand
+    -   category
+    -   product listing page 4ta
+    -   user login page 2ta
+    -   profile page
+    -   wish
+    -   cart
+    -   policy
+
+-   Components
+    -   Brand, Category, Wish, Cart Listing
+    -   Product Listing
+    -   Login
+    -   Verify
+    -   Product Details
+    -   Profile
+    -   Slider
+    -   Menubar
+    -   Footer

@@ -7,6 +7,7 @@
   @include('component.TopBrands')
   @include('component.Footer')
 
+
   <script>
         (async () => {
             await Category();
