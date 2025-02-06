@@ -16,7 +16,7 @@
 </div>
 
 
-<!-- <script>
+<script>
 
     async function TopCategory(){
         let res=await axios.get("/CategoryList");
@@ -35,28 +35,5 @@
             $("#TopCategoryItem").append(EachItem);
         })
     }
-</script> -->
-
-<script>
-    TopCategory();
-    async function TopCategory(){
-        let res = await axios.get("/CategoryList");
-        $("#CategoryItem").empty()
-        res.data['data'].forEach((item,i)=>{
-            let EachItem = `
-            <div class = "p-2 col-2" >
-             <div class = "item">
-              <div class = "categories-box >
-                <a href = "#">
-                 <img src = "${item['CategoryImg']}" alt = "cat_img1" />
-                 <span> ${item['categoryName']} </span>
-                </a>
-              </div>
-             </div>
-            </div>
-            `
-
-            $("#TopCategory").append(EachItem);
-        })
-    }
 </script>
+
