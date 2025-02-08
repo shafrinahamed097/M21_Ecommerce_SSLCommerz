@@ -13,6 +13,10 @@ class BrandController extends Controller
 {
 
 
+  public function ByBrandPage(){
+    return view('pages.product-by-brand');
+  }
+
   public function BrandList(Request $request){
     $data = Brand::all();
     if($data){
