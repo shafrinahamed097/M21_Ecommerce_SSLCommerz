@@ -71,9 +71,9 @@
   <script>
     async function Policy(){
         let searchParams = new URLSearchParams(window.location.search);
-        let type =searchParams.get('type');
+        let type =searchParams.get("type");
 
-        if(type==="about"){
+        if(type === "about"){
             $("#policyName").text("About Us")
         }
 
@@ -81,16 +81,16 @@
             $("#policyName").text("Refund Policy")
         }
 
-        if(type==="terms"){
-            $('#policyName').text("Terms & Condition");
+        if(type === "terms"){
+            $("#policyName").text("Terms & Condition")
         }
 
-        if(type==="how to buy"){
+        if(type === "how to buy"){
             $("#policyName").text("How to Buy")
         }
 
-        if(type ==="contact"){
-            $("#policyName").text("Our Contact Details");
+        if(type === "contact"){
+            $("#policyName").text("Our Contact Details")
         }
 
         if(type === "complain"){
@@ -99,6 +99,6 @@
 
         let res = await axios.get("/PolicyByType/"+type);
         let des = res.data['des']
-        $("#policy").html(des)
+        $("#policy").html(des);
     }
   </script>
