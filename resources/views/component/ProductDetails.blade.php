@@ -279,12 +279,30 @@
         $("#p_size").append(option);
     })
 
-  let ColorOption = `<option value = ''>Choose Color</option>`;
-  $("#p_color").append(ColorOption);
-  color.forEach((item)=>{
-    let option = `<option value = '${item}'>${item}</option>`;
-    $("#p_color").append(option);
+    let ColorOption = `<option value = ''>Choose Color</option>`;
+     $("#p_color").append(ColorOption);
+     color.forEach((item)=>{
+     let option = `<option value = '${item}'>${item}</option>`;
+     $("#p_color").append(option);
   })
+
+    $('img1').on('click', function(){
+     $("#product_img1").attr('src', Details[0]['img1']);
+   })
+
+    $("#img2").on('click', function(){
+        $("#product_img1").attr('src', Details[0]['img2']);
+    })
+
+    $("#img3").on('click', function(){
+        $('#product_img').attr('src', Details[0]['img3']);
+    })
+
+    $("#img4").on('click', function(){
+        $("#product_img").attr("src", Details[0]['img4']);
+    })
+
+
 
  }
 
