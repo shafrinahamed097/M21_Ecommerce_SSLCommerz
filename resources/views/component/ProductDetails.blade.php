@@ -250,6 +250,44 @@
     }
  });
 
+ let searchParams = new URLSearchParams(window.location.search);
+ let id = searchParams.get('id'); 
+ 
+ async function productDetails(){
+    let res = await axios.get("/ProductDetailsById/"+id);
+    let Details = await res.data['data'];
+
+    document.getElementById('product_img1').src=Details[0]['img1'];
+    document.getElementById('img1').src=Details[0]['img1'];
+    document.getElementById('img2').src=Details[0]['img2'];
+    document.getElementById('img3').src=Details[0]['img3'];
+    document.getElementById('img4').src=Details[0]['img4'];
+
+    document.getElementById('p_title').innerText=Details[0]['product']['title'];
+    document.getElementById('p_price').innerText=`$ ${Details[0]['product']['price']}`;
+    document.getElementById('p_des').innerText=Details[0]['product']['short_des'];
+    document.getElementById('p_details').innerHTML=Details[0]['des'];
+
+    // product Size & Color
+    let size =Details[0]['size'].split(',');
+    let color = Details[0]['color'].split(',');
+
+    let SizeOption = `<option value=""><Choose Option</option>`;
+    $("#p_size").append(SizeOption);
+    size.forEach((item)=>{
+        let option = `<option value = "${item}">${item}</option>`;
+        $("#p_size").append(option);
+    })
+
+  let ColorOption = `<option value = ''>Choose Color</option>`;
+  $("#p_color").append(ColorOption);
+  color.forEach((item)=>{
+    let option = `<option value = '${item}'>${item}</option>`;
+    $("#p_color").append(option);
+  })
+
+ }
+
     
 
    
