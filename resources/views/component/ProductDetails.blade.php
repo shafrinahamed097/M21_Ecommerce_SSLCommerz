@@ -326,6 +326,48 @@
     })
   }
 
+  async function AddToCart(){
+    try{
+        let p_size = document.getElementById('p_size').value;
+    let p_color = document.getElementById('p_color').value;
+    let p_qty = document.getElementById('p_qty').value;
+
+    if(p_size.length === 0){
+        alert("Product Size Required !");
+    }
+
+    else if(p_color.length === 0){
+        alert("Product Color Required !");
+    }
+
+    else if(p_qty.length === 0){
+        alert("Product Qty Required !");
+    }
+
+    else{
+        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+        let res = await axios.post("/CreateCartList", {
+            "product_id":id,
+            "color":p_color,
+            "size":p_size,
+            "qty":p_qty
+        });
+        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+        if(res.status===200){
+            alert("Product Added");
+        }
+    }
+    }
+
+    catch(e){
+        if(e.response.status === 401){
+            sessionStorage.setItem("last_location", window.location.href)
+            window.location.href = "/login"
+        }
+    }
+
+  }
+
  
  
 
