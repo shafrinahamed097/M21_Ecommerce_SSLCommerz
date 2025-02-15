@@ -257,7 +257,7 @@
     let res = await axios.get("/ProductDetailsById/"+id);
     let Details = await res.data['data'];
 
-    document.getElementById('product_img1').src=Details[0]['img1'];
+    document.getElementById('product_img1').src=Detail[0]['img1'];
     document.getElementById('img1').src=Details[0]['img1'];
     document.getElementById('img2').src=Details[0]['img2'];
     document.getElementById('img3').src=Details[0]['img3'];
@@ -268,43 +268,66 @@
     document.getElementById('p_des').innerText=Details[0]['product']['short_des'];
     document.getElementById('p_details').innerHTML=Details[0]['des'];
 
-    // product Size & Color
-    let size =Details[0]['size'].split(',');
+    // Product Size & color
+    let size = Details[0]['size'].split(',');
     let color = Details[0]['color'].split(',');
 
-    let SizeOption = `<option value=""><Choose Option</option>`;
+    let SizeOption = `<option value = ''>Choose Size</option>`;
     $("#p_size").append(SizeOption);
     size.forEach((item)=>{
         let option = `<option value = "${item}">${item}</option>`;
         $("#p_size").append(option);
-    })
+    });
 
-    let ColorOption = `<option value = ''>Choose Color</option>`;
-     $("#p_color").append(ColorOption);
-     color.forEach((item)=>{
-     let option = `<option value = '${item}'>${item}</option>`;
-     $("#p_color").append(option);
-  })
+    let ColorOption = `<option value = "" >Choose Size</option>`;
+    $("#p_color").append('ColorOption');
+    color.forEach((item)=>{
+        let option = `<option value = "${item}">${option}</option>`;
+    });
 
-    $('img1').on('click', function(){
-     $("#product_img1").attr('src', Details[0]['img1']);
-   })
+    $("#img1").on('click', function(){
+        $("#product_img1").attr('src', Details[0]['img1']);
+    });
 
-    $("#img2").on('click', function(){
+    $("img2").on('click', function(){
         $("#product_img1").attr('src', Details[0]['img2']);
-    })
+
+    });
 
     $("#img3").on('click', function(){
-        $('#product_img').attr('src', Details[0]['img3']);
-    })
+        $("#product_img1").attr("src", Detail[0]['img3']);
+    });
 
     $("#img4").on('click', function(){
-        $("#product_img").attr("src", Details[0]['img4']);
-    })
-
+        $("#product_img1").attr('src', Details[0]['img4']);
+    });
 
 
  }
+
+  async function productReview(){
+    let res = await axios.get("/ListReviewByProduct/"+id);
+    let Details = await res.data['data'];
+
+    $("#reviewList").empty();
+    Details.forEach((item,i)=>{
+        let each = `
+           <li class = "list-group-item">
+            <h6>${item['profile']['cus_name']}</h6>
+            <p class = "m-0 p-0" >${item['description']}</p>
+            <div class = "rating" >
+              <div class = "product_rate"  style = "width:${parseFloat(item['rating'])}%" ></div>
+            </div>
+
+           
+           </li>
+        `
+        $("#reviewList").append(each);
+    })
+  }
+
+ 
+ 
 
     
 
