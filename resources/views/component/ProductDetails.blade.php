@@ -342,7 +342,7 @@
         alert("You must select product Qty");
     }
     else{
-        $(".preloader").delay(90).fadeOut(100).removeClass('loaded');
+        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
         let res = await axios.post("/CreateCartList",{
             "product_id":id,
             "color":p_color,
@@ -363,22 +363,41 @@
     }
    }
 
-   async function AddToWishList(){
-    try{
-        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+  async function AddToWishList(){
+   try{
+    $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
     let res = await axios.get("/CreateWishList/"+id);
     $(".preloader").delay(90).fadeOut(100).addClass('loaded');
     if(res.status === 200){
-        alert('Added Wishlist')
-    }
-    }
-    catch(e){
-        if(e.response.status === 401){
-            sessionStorage.setItem("last_location", window.location.href)
-            window.location.href = "/login"
-        }
+        alert("Product Added With Your Wish List")
     }
    }
+   catch(e){
+    if(e.response.status === 401){
+        sessionStorage.setItem("last_location", window.location.href)
+        window.location.href="/login";
+    }
+   }
+  }
+
+  async function AddReview(){
+    let reviewText = document.getElementById('reviewTextID').value;
+    let reviewScore = document.getElementById('reviewScore').value;
+
+    if(reviewScore.length === 0){
+        alert("Review Score Required !");
+    }
+    else if(reviewText.length === 0){
+        alert("Review Required !");
+    }else{
+        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+        let postBody = {description:reviewText, rating:reviewScore, product_id:id};
+        let res = await axios.post("/CreateProductReview", postBody);
+        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+        await productReview();
+
+    }
+  }
     
 
    
