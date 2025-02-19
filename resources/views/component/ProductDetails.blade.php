@@ -40,7 +40,7 @@
                     </select>
 
                     <label class="form-label">Color</label>
-                    <select id="p_color" class="form-select">
+                    <select id="p_color" class="form-select"> 
 
                     </select>
 
@@ -246,18 +246,20 @@
 
  $('.minus').on('click', function(){
     if($(this).next().val() > 1){
-        if($(this).next().val() > 1) $(this).next.val(+ $(this).next().val() -1);
+        if($(this).next().val() > 1) $(this).next().val(+ $(this).next().val() -1);
     }
  });
 
  let searchParams = new URLSearchParams(window.location.search);
  let id = searchParams.get('id'); 
+
+
  
  async function productDetails(){
     let res = await axios.get("/ProductDetailsById/"+id);
     let Details = await res.data['data'];
 
-    document.getElementById('product_img1').src=Detail[0]['img1'];
+    document.getElementById('product_img1').src=Details[0]['img1'];
     document.getElementById('img1').src=Details[0]['img1'];
     document.getElementById('img2').src=Details[0]['img2'];
     document.getElementById('img3').src=Details[0]['img3'];
@@ -272,17 +274,17 @@
     let size = Details[0]['size'].split(',');
     let color = Details[0]['color'].split(',');
 
-    let SizeOption = `<option value = ''>Choose Size</option>`;
+    let SizeOption = `<option value=''>Choose Size</option>`;
     $("#p_size").append(SizeOption);
     size.forEach((item)=>{
-        let option = `<option value = "${item}">${item}</option>`;
+        let option = `<option value = '${item}'>${item}</option>`;
         $("#p_size").append(option);
     });
 
-    let ColorOption = `<option value = "" >Choose Size</option>`;
+    let ColorOption = `<option value= '' >Choose Color</option>`;
     $("#p_color").append('ColorOption');
     color.forEach((item)=>{
-        let option = `<option value = "${item}">${option}</option>`;
+        let option = `<option value = '${item}'>${option}</option>`;
     });
 
     $("#img1").on('click', function(){
@@ -295,7 +297,7 @@
     });
 
     $("#img3").on('click', function(){
-        $("#product_img1").attr("src", Detail[0]['img3']);
+        $("#product_img1").attr("src", Details[0]['img3']);
     });
 
     $("#img4").on('click', function(){
@@ -380,24 +382,24 @@
    }
   }
 
-  async function AddReview(){
-    let reviewText = document.getElementById('reviewTextID').value;
+ async function AddReview(){
+    let reviewTextID = document.getElementById('reviewTextID').value;
     let reviewScore = document.getElementById('reviewScore').value;
 
-    if(reviewScore.length === 0){
+    if(reviewTextID.length === 0){
+        alert("Review text required !");
+    }
+    else if(reviewScore.length === 0){
         alert("Review Score Required !");
     }
-    else if(reviewText.length === 0){
-        alert("Review Required !");
-    }else{
+    else{
         $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-        let postBody = {description:reviewText, rating:reviewScore, product_id:id};
+        let postBody = {description:reviewTextID, rating:reviewScore, product_id:id};
         let res = await axios.post("/CreateProductReview", postBody);
         $(".preloader").delay(90).fadeOut(100).addClass('loaded');
         await productReview();
-
     }
-  }
+ }
     
 
    
