@@ -40,7 +40,7 @@
                     </select>
 
                     <label class="form-label">Color</label>
-                    <select id="p_color" class="form-select"> 
+                    <select id="p_color" class="form-select">
 
                     </select>
 
@@ -67,7 +67,7 @@
 
 
 
-<!-- <script>
+<script>
 
 
     $('.plus').on('click', function() {
@@ -233,174 +233,4 @@
 
 
 
-</script> -->
-
-
-<script>
- $('.plus').on('click', function(){
-    if($(this).prev().val()){
-        $(this).prev().val(+ $(this).prev().val()+1);
-    }
-
- });
-
- $('.minus').on('click', function(){
-    if($(this).next().val() > 1){
-        if($(this).next().val() > 1) $(this).next().val(+ $(this).next().val() -1);
-    }
- });
-
- let searchParams = new URLSearchParams(window.location.search);
- let id = searchParams.get('id'); 
-
-
- 
- async function productDetails(){
-    let res = await axios.get("/ProductDetailsById/"+id);
-    let Details = await res.data['data'];
-
-    document.getElementById('product_img1').src=Details[0]['img1'];
-    document.getElementById('img1').src=Details[0]['img1'];
-    document.getElementById('img2').src=Details[0]['img2'];
-    document.getElementById('img3').src=Details[0]['img3'];
-    document.getElementById('img4').src=Details[0]['img4'];
-
-    document.getElementById('p_title').innerText=Details[0]['product']['title'];
-    document.getElementById('p_price').innerText=`$ ${Details[0]['product']['price']}`;
-    document.getElementById('p_des').innerText=Details[0]['product']['short_des'];
-    document.getElementById('p_details').innerHTML=Details[0]['des'];
-
-    // Product Size & color
-    let size = Details[0]['size'].split(',');
-    let color = Details[0]['color'].split(',');
-
-    let SizeOption = `<option value=''>Choose Size</option>`;
-    $("#p_size").append(SizeOption);
-    size.forEach((item)=>{
-        let option = `<option value = '${item}'>${item}</option>`;
-        $("#p_size").append(option);
-    });
-
-    let ColorOption = `<option value= '' >Choose Color</option>`;
-    $("#p_color").append('ColorOption');
-    color.forEach((item)=>{
-        let option = `<option value = '${item}'>${option}</option>`;
-    });
-
-    $("#img1").on('click', function(){
-        $("#product_img1").attr('src', Details[0]['img1']);
-    });
-
-    $("img2").on('click', function(){
-        $("#product_img1").attr('src', Details[0]['img2']);
-
-    });
-
-    $("#img3").on('click', function(){
-        $("#product_img1").attr("src", Details[0]['img3']);
-    });
-
-    $("#img4").on('click', function(){
-        $("#product_img1").attr('src', Details[0]['img4']);
-    });
-
-
- }
-
-  async function productReview(){
-    let res = await axios.get("/ListReviewByProduct/"+id);
-    let Details = await res.data['data'];
-
-    $("#reviewList").empty();
-    Details.forEach((item,i)=>{
-        let each = `
-           <li class = "list-group-item">
-            <h6>${item['profile']['cus_name']}</h6>
-            <p class = "m-0 p-0" >${item['description']}</p>
-            <div class = "rating" >
-              <div class = "product_rate"  style = "width:${parseFloat(item['rating'])}%" ></div>
-            </div>
-
-           
-           </li>
-        `
-        $("#reviewList").append(each);
-    })
-  }
-
-   async function AddToCart(){
-    try{
-        let p_size = document.getElementById('p_size').value;
-    let p_color = document.getElementById('p_color').value;
-    let p_qty = document.getElementById('p_qty').value;
-
-    if(p_size.length === 0){
-        alert("You must select product size !");
-    }
-    else if(p_color.length === 0){
-        alert("You must select product color");
-    }
-    else if(p_qty.length === 0){
-        alert("You must select product Qty");
-    }
-    else{
-        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-        let res = await axios.post("/CreateCartList",{
-            "product_id":id,
-            "color":p_color,
-            "size":p_size,
-            "qty":p_qty
-        });
-        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
-        if(res.status === 200){
-            alert("Product Added")
-        }
-    }
-    }
-    catch(e){
-        if(e.response.status === 401){
-            sessionStorage.setItem("last_location", window.location.href)
-            window.location.href = "/login";
-        }
-    }
-   }
-
-  async function AddToWishList(){
-   try{
-    $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-    let res = await axios.get("/CreateWishList/"+id);
-    $(".preloader").delay(90).fadeOut(100).addClass('loaded');
-    if(res.status === 200){
-        alert("Product Added With Your Wish List")
-    }
-   }
-   catch(e){
-    if(e.response.status === 401){
-        sessionStorage.setItem("last_location", window.location.href)
-        window.location.href="/login";
-    }
-   }
-  }
-
- async function AddReview(){
-    let reviewTextID = document.getElementById('reviewTextID').value;
-    let reviewScore = document.getElementById('reviewScore').value;
-
-    if(reviewTextID.length === 0){
-        alert("Review text required !");
-    }
-    else if(reviewScore.length === 0){
-        alert("Review Score Required !");
-    }
-    else{
-        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-        let postBody = {description:reviewTextID, rating:reviewScore, product_id:id};
-        let res = await axios.post("/CreateProductReview", postBody);
-        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
-        await productReview();
-    }
- }
-    
-
-   
 </script>
